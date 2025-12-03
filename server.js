@@ -18,7 +18,7 @@ app.use(express.json());
 // --- HEALTH CHECK ENDPOINT ---
 app.get('/health', (req, res) => {
     res.status(200).json({
-        status: 'UP',
+        status: 'RUNNING',
         timestamp: new Date().toISOString(),
         uptime: process.uptime() // How long (in seconds) the server has been running
     });
@@ -27,7 +27,7 @@ app.get('/health', (req, res) => {
 // --- PROXY ENDPOINT ---
 app.all('/proxy', async (req, res) => {
     const endpoint = req.query.endpoint; 
-    
+    console.log(`Proxying request to endpoint: ${endpoint}`);
     // --- READ HEADERS FROM FRONTEND ---
     const userToken = req.headers['x-jira-token']; // The Personal Access Token
     const jiraBaseUrl = req.headers['x-jira-url']; // The Jira URL (e.g., https://jira.sapfgl.com)
@@ -47,7 +47,7 @@ app.all('/proxy', async (req, res) => {
     // Make sure we handle potential double slashes
     const cleanBase = jiraBaseUrl.replace(/\/$/, ""); // Remove trailing slash if present
     const fullUrl = `${cleanBase}${endpoint}`;
-
+    console.log(`Full URL: ${fullUrl}`);
     try {
         const response = await axios({
             method: req.method,
@@ -59,7 +59,7 @@ app.all('/proxy', async (req, res) => {
             },
             data: req.body // Pass body for PUT/POST
         });
-
+        console.log(`Response received with status: ${response.status}`);
         res.json(response.data);
 
     } catch (error) {
