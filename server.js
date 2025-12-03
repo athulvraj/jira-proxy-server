@@ -47,8 +47,9 @@ app.all('/proxy', async (req, res) => {
     // Make sure we handle potential double slashes
     const cleanBase = jiraBaseUrl.replace(/\/$/, ""); // Remove trailing slash if present
     const fullUrl = `${cleanBase}${endpoint}`;
-    console.log(`Full URL: ${fullUrl}`);
+    
     try {
+        console.log(`Making ${req.method} request to ${fullUrl}`);
         const response = await axios({
             method: req.method,
             url: fullUrl,
