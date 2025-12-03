@@ -6,7 +6,13 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: '*' })); 
+app.use(cors({ 
+    origin: true, // Automatically sets the 'Access-Control-Allow-Origin' to the requester's domain
+    credentials: true, // Tells browsers "It's okay to send tokens/headers"
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-jira-token', 'x-jira-url'] 
+})); 
+
 app.use(express.json());
 
 // --- HEALTH CHECK ENDPOINT ---
