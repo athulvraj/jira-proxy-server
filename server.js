@@ -4,11 +4,10 @@ const cors = require('cors');
 const axios = require('axios');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3091;
 
 app.use(cors({ 
     origin: true, // Automatically sets the 'Access-Control-Allow-Origin' to the requester's domain
-    credentials: true, // Tells browsers "It's okay to send tokens/headers"
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-jira-token', 'x-jira-url'] 
 })); 
@@ -20,7 +19,7 @@ app.get('/health', (req, res) => {
     res.status(200).json({
         status: 'RUNNING',
         timestamp: new Date().toISOString(),
-        uptime: process.uptime() // How long (in seconds) the server has been running
+        uptime: process.uptime() 
     });
 });
 
