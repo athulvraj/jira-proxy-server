@@ -3,4 +3,4 @@ applications:
   - name: jira-proxy-server
     memory: 256M
     # random-route: true
-    host: jira-proxy-server-8732273
+    host: jira-proxy-server
